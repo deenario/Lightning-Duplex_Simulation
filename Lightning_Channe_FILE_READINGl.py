@@ -39,6 +39,24 @@ def payUser(sender, receiver, amount):
         print('Overflow occured')
 
 
+def printResults():
+    print("-------------------LIGHTNING CHANNEL(FILE READ) SIMULATION ENDS--------------------")
+    print(no_payments, ' payments completed.')
+    print('After simulation Alice has ', alice.coins, ' coins and bob has ', bob.coins, ' coins')
+    print("Total Messages transferred were ", alice.messages + bob.messages)
+    print("The unbalanced Condition Occurred ", unbalancedCondition, " times.")
+
+    print("---------------Alices' Statistics---------------")
+    print("Messages transferred by Alice are: ", alice.messages)
+    print("Hashes created by Alice are: ", alice.hash_counter)
+    print("Signatures created by Alice are: ", alice.signature_counter)
+
+    print("---------------Bob's Statistics---------------")
+    print("Messages transferred by Bob are: ", bob.messages)
+    print("Hashes created by Bob are: ", bob.hash_counter)
+    print("Signatures created by Bob are: ", bob.signature_counter)
+
+
 def coin_Toss():
     with open('coin_toss.txt','r') as f:
         for line in f:
@@ -56,10 +74,16 @@ unbalancedCondition = 0
 coinTossList = []
 coin_Toss()
 i = 0
+amount_to_transfer = 1
+
+
 # input required for the number of payments
 print("LIGHTNING CHANNEL SIMULATION")
-no_payments = int(input("Enter the number of payments you want to Simulate: "))
-amount_to_transfer = int(input("Enter the the transaction amount: "))
+readFromFile = int(input("Do you want to read coin toss from the file (1 YES , 0 NO): "))
+if readFromFile == 1:
+    no_payments = len(coinTossList)
+else:
+    no_payments = int(input("Enter the number of payments you want to Simulate: "))
 
 
 # for loop to run X times
@@ -79,31 +103,30 @@ for x in range(no_payments):
         unbalancedCondition += 1
 
     else:
-        # coin Toss between head and tails.
-        # Head = 1 & tail = 0
-        coinToss = coinTossList[i]
-        # coin toss = 1 = heads . Alice pays bob
-        if 1 == coinToss:
-            payUser(alice, bob, amount_to_transfer)
-        # coin toss = 0 = Tails . Bob pays Alice
+        if readFromFile == 1:
+            # coin Toss between head and tails.
+            # Head = 1 & tail = 0
+            coinToss = coinTossList[i]
+            # coin toss = 1 = heads . Alice pays bob
+            if 1 == coinToss:
+                payUser(alice, bob, amount_to_transfer)
+            # coin toss = 0 = Tails . Bob pays Alice
+            else:
+                payUser(bob, alice, amount_to_transfer)
+            i += 1
         else:
-            payUser(bob, alice, amount_to_transfer)
-        i += 1
-    print('New state of coins is that ', alice.name, ' has ', alice.coins, ' coins and ', bob.name, ' has ', bob.coins,
-          ' coins')
+            # coin Toss between head and tails.
+            # Head = 1 & tail = 0
+            coinToss = random.randint(0,1)
+            # coin toss = 1 = heads . Alice pays bob
+            if 1 == coinToss:
+                payUser(alice, bob, amount_to_transfer)
+            # coin toss = 0 = Tails . Bob pays Alice
+            else:
+                payUser(bob, alice, amount_to_transfer)
 
-print("-------------------LIGHTNING CHANNEL(FILE READ) SIMULATION ENDS--------------------")
-print(no_payments, ' payments completed.')
-print('After simulation Alice has ', alice.coins, ' coins and bob has ', bob.coins, ' coins')
-print("Total Messages transferred were ",alice.messages + bob.messages)
-print("The unbalanced Condition Occurred ", unbalancedCondition, " times.")
+        print('New state of coins is that ', alice.name, ' has ', alice.coins, ' coins and ', bob.name, ' has ', bob.coins,
+              ' coins')
 
-print("---------------Alices' Statistics---------------")
-print("Messages transferred by Alice are: ", alice.messages)
-print("Hashes created by Alice are: ", alice.hash_counter)
-print("Signatures created by Alice are: ", alice.signature_counter)
 
-print("---------------Bob's Statistics---------------")
-print("Messages transferred by Bob are: ", bob.messages)
-print("Hashes created by Bob are: ", bob.hash_counter)
-print("Signatures created by Bob are: ", bob.signature_counter)
+printResults()
