@@ -1,5 +1,7 @@
 import random
-
+from configparser import ConfigParser
+cfg = ConfigParser()
+cfg.read('config.ini')
 
 # USER CLASS
 class User:
@@ -118,11 +120,10 @@ def coin_Toss():
             for ch in line:
                 cointTossList.append(int(ch))
 
-
 # variables needed in the simulation
-user1Coins = 10
-user2Coins = 10
-amount_to_transfer = 1
+user1Coins = int(cfg.get('Lightning_Variables','user1coins'))
+user2Coins = int(cfg.get('Lightning_Variables','user2coins'))
+amount_to_transfer = int(cfg.get('Lightning_Variables','amount_to_transfer'))
 _rounds = 0
 lightningResetOccurred = 0
 cointTossList = []

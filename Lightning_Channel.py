@@ -1,4 +1,5 @@
 import random
+from configparser import ConfigParser
 
 # USER CLASS
 class User:
@@ -64,17 +65,21 @@ def coin_Toss():
                 coinTossList.append(int(ch))
 
 
-# create two objects of the user class
-alice = User(10, 'alice')
-bob = User(10, 'bob')
+cfg = ConfigParser()
+cfg.read('config.ini')
 
 # variables needed in the simulation
+user1Coins = int(cfg.get('Lightning_Variables','user1coins'))
+user2Coins = int(cfg.get('Lightning_Variables','user2coins'))
+amount_to_transfer = int(cfg.get('Lightning_Variables','amount_to_transfer'))
 _rounds = 0
 unbalancedCondition = 0
 coinTossList = []
 i = 0
-amount_to_transfer = 1
 
+# create two objects of the user class
+alice = User(user1Coins, 'alice')
+bob = User(user2Coins, 'bob')
 
 # input required for the number of payments
 print("LIGHTNING CHANNEL SIMULATION")
