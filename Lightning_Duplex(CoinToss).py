@@ -41,7 +41,7 @@ def onewayChannel(sender, receiver, amount):
         return True
 
 
-def lightningReset(sender, receiver, amount):
+def lightningResetWithPayment(sender, receiver, amount):
     global lightningResetOccurred
     if not (receiver.checkOverflow(amount)):
         print(sender.name, ' computes a hash & a Signature')
@@ -59,6 +59,26 @@ def lightningReset(sender, receiver, amount):
         lightningResetOccurred += 1
     if onewayChannel(sender, receiver, amount):
         pass
+    else:
+        print('Overflow occurred')
+
+
+def lightningResetWithoutPayment(sender, receiver, amount):
+    global lightningResetOccurred
+    if not (receiver.checkOverflow(amount)):
+        print(sender.name, ' computes a hash & a Signature')
+        sender.hash_counter += 1
+        sender.signature_counter += 1
+        sender.messages += 2
+        receiver.signature_counter += 1
+        receiver.hash_counter += 1
+        receiver.messages += 2
+        sender.coins = sender.deposited_coins + sender.coins
+        receiver.coins = receiver.deposited_coins + receiver.coins
+        receiver.deposited_coins = 0
+        sender.deposited_coins = 0
+        print("Lightning reset Occurred now ")
+        lightningResetOccurred += 1
     else:
         print('Overflow occurred')
 
@@ -99,51 +119,68 @@ def coin_Toss():
                 cointTossList.append(int(ch))
 
 
-# input required for the number of payments
-print("LIGHTNING DUPLEX SIMULATION")
-user1Coins = 10  # int(input("Enter the amount of coins that Alice will have: "))
-user2Coins = 0  # int(input("Enter the amount of coins that Bob will have: "))
-no_payments = int(input("Enter the number of payments you want to Simulate: "))
-amount_to_transfer = 1  # int(input("Enter the the transaction amount: "))
-
-# create two objects of the user class
-alice = User(user1Coins, 'alice')
-bob = User(user2Coins, 'bob')
-
 # variables needed in the simulation
+user1Coins = 10
+user2Coins = 10
+amount_to_transfer = 1
 _rounds = 0
 lightningResetOccurred = 0
 cointTossList = []
-coin_Toss()
 i = 0
 coinToss = 0
 _sender = object
 _receiver = object
 
+# create two objects of the user class
+alice = User(user1Coins, 'alice')
+bob = User(user2Coins, 'bob')
+
+# input required for the number of payments
+print("LIGHTNING DUPLEX SIMULATION")
+readFromFile = int(input("Do you want to read coin toss from the file (1 YES , 0 NO): "))
+if readFromFile == 1:
+    coin_Toss()
+    no_payments = len(cointTossList)
+else:
+    no_payments = int(input("Enter the number of payments you want to Simulate: "))
+payWithReset = int(input("Choose one of the two payment methods. \n 1. Payment + Reset Together \n 2. Payment and Reset Seperate: "))
+
+
 # for loop to run X times
 for x in range(no_payments):
+    if readFromFile == 1:
+        coinToss = cointTossList[i]
+        if coinToss == 0:
+            _sender = alice
+            _receiver = bob
+        else:
+            _sender = bob
+            _receiver = alice
+        i += 1
 
-    coinToss = cointTossList[i]
-
-    if coinToss == 0:
-        _sender = alice
-        _receiver = bob
     else:
-        _sender = bob
-        _receiver = alice
+        coinToss = random.randint(0,1)
+        if coinToss == 0:
+            _sender = alice
+            _receiver = bob
+        else:
+            _sender = bob
+            _receiver = alice
 
     if onewayChannel(_sender, _receiver, amount_to_transfer):
         print("One way Transfer Occurred")
         print()
     else:
         if validate_Uncommitted_Coins(_sender):
-            lightningReset(_sender, _receiver, amount_to_transfer)
+            if payWithReset == 1:
+                lightningResetWithPayment(_sender, _receiver, amount_to_transfer)
+            else:
+                lightningResetWithoutPayment(_sender,_receiver,amount_to_transfer)
         else:
             onewayChannel(_receiver, _sender, amount_to_transfer)
 
     print(alice.name, "has ", alice.coins, " coins to send and has received ", alice.deposited_coins,
           " uncommitted coins and ", bob.name, " has ",
           bob.coins, " coins to send and has received ", bob.deposited_coins, " uncommitted Coins")
-    i += 1
 
 printResults()

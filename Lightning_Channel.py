@@ -72,7 +72,6 @@ bob = User(10, 'bob')
 _rounds = 0
 unbalancedCondition = 0
 coinTossList = []
-coin_Toss()
 i = 0
 amount_to_transfer = 1
 
@@ -81,6 +80,7 @@ amount_to_transfer = 1
 print("LIGHTNING CHANNEL SIMULATION")
 readFromFile = int(input("Do you want to read coin toss from the file (1 YES , 0 NO): "))
 if readFromFile == 1:
+    coin_Toss()
     no_payments = len(coinTossList)
 else:
     no_payments = int(input("Enter the number of payments you want to Simulate: "))
