@@ -65,6 +65,10 @@ def coin_Toss():
                 coinTossList.append(int(ch))
 
 
+def writeforGraphs(TotalMessages):
+    with open('LightningResults.txt', 'a') as f:
+        f.write(str(TotalMessages) + "\n")
+
 cfg = ConfigParser()
 cfg.read('config.ini')
 
@@ -132,6 +136,6 @@ for x in range(no_payments):
 
         print('New state of coins is that ', alice.name, ' has ', alice.coins, ' coins and ', bob.name, ' has ', bob.coins,
               ' coins')
-
+    writeforGraphs(alice.messages + bob.messages)
 
 printResults()

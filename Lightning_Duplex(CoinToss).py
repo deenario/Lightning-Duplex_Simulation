@@ -120,6 +120,10 @@ def coin_Toss():
             for ch in line:
                 cointTossList.append(int(ch))
 
+def writeforGraphs(TotalMessages):
+    with open('DuplexResults.txt', 'a') as f:
+        f.write(str(TotalMessages) + "\n")
+
 # variables needed in the simulation
 user1Coins = int(cfg.get('Lightning_Variables','user1coins'))
 user2Coins = int(cfg.get('Lightning_Variables','user2coins'))
@@ -180,6 +184,7 @@ for x in range(no_payments):
         else:
             onewayChannel(_receiver, _sender, amount_to_transfer)
 
+    writeforGraphs(alice.messages+bob.messages)
     print(alice.name, "has ", alice.coins, " coins to send and has received ", alice.deposited_coins,
           " uncommitted coins and ", bob.name, " has ",
           bob.coins, " coins to send and has received ", bob.deposited_coins, " uncommitted Coins")
