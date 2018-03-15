@@ -111,7 +111,6 @@ def printResults():
 
     print("Total Messages transferred were ", alice.messages + bob.messages)
     print("Lightning Reset Occurred ", lightningResetOccurred, " times.")
-
     print("---------------Alices' Statistics---------------")
     print("Messages transferred by Alice are: ", alice.messages)
     print("Hashes created by Alice are: ", alice.hash_counter)
