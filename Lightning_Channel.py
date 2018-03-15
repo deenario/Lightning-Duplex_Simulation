@@ -101,12 +101,12 @@ for x in range(no_payments):
     print('ROUND # ', _rounds)
     # if Alice or Bob gets to an unbalanced state of ZERO coins
     # Alice has Zero Coins
-    if 1 > alice.coins:
+    if 0 == alice.coins:
         print('Unbalanced Condition Alice has no coins')
         payUser(bob, alice, amount_to_transfer)
         unbalancedCondition += 1
     # bob has Zero coins
-    elif 1 > bob.coins:
+    elif 0 == bob.coins:
         print('Unbalanced Condition Bob has no coins')
         payUser(alice, bob, amount_to_transfer)
         unbalancedCondition += 1

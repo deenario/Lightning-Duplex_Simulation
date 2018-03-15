@@ -28,7 +28,7 @@ class User:
 
 
 def onewayChannel(sender, receiver, amount):
-    if sender.coins < 1:
+    if sender.coins == 0:
         return False
     else:
         if not (receiver.checkOverflow(amount)):
@@ -86,7 +86,7 @@ def lightningResetWithoutPayment(sender, receiver, amount):
 
 
 def validate_Uncommitted_Coins(sender):
-    if sender.deposited_coins > 1:
+    if sender.deposited_coins > 0:
         return True
     else:
         return False
