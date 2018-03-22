@@ -1,7 +1,9 @@
 import random
 from configparser import ConfigParser
+
 cfg = ConfigParser()
 cfg.read('config.ini')
+
 
 # USER CLASS
 class User:
@@ -114,20 +116,44 @@ def printResults():
     print("Signatures created by Bob are: ", bob.signature_counter)
 
 
-def coin_Toss():
-    with open('coin_toss.txt', 'r') as f:
-        for line in f:
-            for ch in line:
-                cointTossList.append(int(ch))
+def coin_Toss(Fileoption):
+    alicePays = 0
+    if Fileoption == 1:
+        with open('AlicePaysMore.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    cointTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    elif Fileoption == 2:
+        with open('BobPaysMore.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    cointTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    elif Fileoption == 3:
+        with open('UnbaisedCoinToss.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    cointTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    else:
+        print("Wrong Input run the program again.")
+    print("Alice is paying ", ((alicePays / 1000) * 100), " Times and Bob is paying ",
+          (((1000 - alicePays) / 1000) * 100), " times")
+
 
 def writeforGraphs(TotalMessages):
     with open('DuplexResults.txt', 'a') as f:
         f.write(str(TotalMessages) + "\n")
 
+
 # variables needed in the simulation
-user1Coins = int(cfg.get('Lightning_Variables','user1coins'))
-user2Coins = int(cfg.get('Lightning_Variables','user2coins'))
-amount_to_transfer = int(cfg.get('Lightning_Variables','amount_to_transfer'))
+user1Coins = int(cfg.get('Lightning_Variables', 'user1coins'))
+user2Coins = int(cfg.get('Lightning_Variables', 'user2coins'))
+amount_to_transfer = int(cfg.get('Lightning_Variables', 'amount_to_transfer'))
 _rounds = 0
 lightningResetOccurred = 0
 cointTossList = []
@@ -144,12 +170,13 @@ bob = User(user2Coins, 'bob')
 print("LIGHTNING DUPLEX SIMULATION")
 readFromFile = int(input("Do you want to read coin toss from the file (1 YES , 0 NO): "))
 if readFromFile == 1:
-    coin_Toss()
+    FileOption = int(input("Choose 1 of the following Coin Toss: 1. Biased Alice 2.Biased Bob or 3.Unbiased "))
+    coin_Toss(FileOption)
     no_payments = len(cointTossList)
 else:
     no_payments = int(input("Enter the number of payments you want to Simulate: "))
-payWithReset = int(input("Choose one of the two payment methods. \n 1. Payment + Reset Together \n 2. Payment and Reset Seperate: "))
-
+payWithReset = int(
+    input("Choose one of the two payment methods. \n 1. Payment + Reset Together \n 2. Payment and Reset Seperate: "))
 
 # for loop to run X times
 for x in range(no_payments):
@@ -164,7 +191,7 @@ for x in range(no_payments):
         i += 1
 
     else:
-        coinToss = random.randint(0,1)
+        coinToss = random.randint(0, 1)
         if coinToss == 0:
             _sender = alice
             _receiver = bob
@@ -180,11 +207,11 @@ for x in range(no_payments):
             if payWithReset == 1:
                 lightningResetWithPayment(_sender, _receiver, amount_to_transfer)
             else:
-                lightningResetWithoutPayment(_sender,_receiver,amount_to_transfer)
+                lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
         else:
             onewayChannel(_receiver, _sender, amount_to_transfer)
 
-    writeforGraphs(alice.messages+bob.messages)
+    writeforGraphs(alice.messages + bob.messages)
     print(alice.name, "has ", alice.coins, " coins to send and has received ", alice.deposited_coins,
           " uncommitted coins and ", bob.name, " has ",
           bob.coins, " coins to send and has received ", bob.deposited_coins, " uncommitted Coins")

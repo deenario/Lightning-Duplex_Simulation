@@ -12,6 +12,7 @@ class User:
         self.hash_counter = 0
         self.signature_counter = 0
         self.messages = 0
+        self.refill = 0
 
     def sendCoin(self, amount):
         self.coins -= amount
@@ -92,14 +93,23 @@ def validate_Uncommitted_Coins(sender):
         return False
 
 
+def validate_Coins(user):
+    if user.coins > 0:
+        return True
+    else:
+        return False
+
+
 def refillChannel(sender,receiver):
     if onewayChannel(sender,receiver,10):
+        receiver.refill += 1
         return True
     else:
         return False
 
 
 def printResults():
+
     print("-------------------LIGHTNING DUPLEX WITH COIN TOSS (FILE READ) SIMULATION ENDS--------------------")
     print(no_payments, ' payments completed.')
     print("After Simulation:")
@@ -111,6 +121,7 @@ def printResults():
 
     print("Total Messages transferred were ", alice.messages + bob.messages)
     print("Lightning Reset Occurred ", lightningResetOccurred, " times.")
+
     print("---------------Alices' Statistics---------------")
     print("Messages transferred by Alice are: ", alice.messages)
     print("Hashes created by Alice are: ", alice.hash_counter)
@@ -122,16 +133,53 @@ def printResults():
     print("Signatures created by Bob are: ", bob.signature_counter)
 
 
-def coin_Toss():
-    with open('coin_toss.txt', 'r') as f:
-        for line in f:
-            for ch in line:
-                cointTossList.append(int(ch))
+def coin_Toss(Fileoption):
+    alicePays = 0
+    if Fileoption == 1:
+        with open('Text_Files//AlicePaysMore.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    coinTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    elif Fileoption == 2:
+        with open('Text_Files//BobPaysMore.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    coinTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    elif Fileoption == 3:
+        with open('Text_Files//UnbaisedCoinToss.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    coinTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    else:
+        print("Wrong Input run the program again.")
+    print("Alice is paying ", ((alicePays / 1000) * 100), " Times and Bob is paying ",
+          (((1000 - alicePays) / 1000) * 100), " times")
 
 
-def writeforGraphs(TotalMessages):
-    with open('DuplexResults.txt', 'a') as f:
-        f.write(str(TotalMessages) + "\n")
+def writeforGraphs(File_Option):
+    if File_Option == 1:
+        with open('Text_Files//DuplexResultsBiased_Messages.txt', 'a') as f:
+            f.write(str(alice.messages + bob.messages) + "\n")
+        with open('Text_Files//DuplexResultsBiased_Refill.txt', 'w') as f2:
+            f2.write("Alice Refill = " + str(alice.refill) + " and Bob Refill " + str(bob.refill) + "\n")
+
+    elif File_Option == 3:
+        with open('Text_Files//DuplexResultsUnbiased_Messages.txt', 'a') as f:
+            f.write(str(alice.messages + bob.messages) + "\n")
+        with open('Text_Files//DuplexResultsUnbiased_Refill.txt', 'w') as f2:
+            f2.write("Alice Refill = " + str(alice.refill) + " and Bob Refill " + str(bob.refill) + "\n")
+
+    else:
+        with open('Text_Files//DuplexResults.txt', 'a') as f:
+            f.write(str(alice.messages + bob.messages) + "\n")
+        with open('Text_Files//DuplexResultsUnbiased_Refill.txt', 'w') as f2:
+            f2.write("Alice Refill = " + str(alice.refill) + " and Bob Refill " + str(bob.refill) + "\n")
 
 
 # variables needed in the simulation
@@ -140,7 +188,7 @@ user2Coins = int(cfg.get('Lightning_Variables','user2coins'))
 amount_to_transfer = int(cfg.get('Lightning_Variables','amount_to_transfer'))
 _rounds = 0
 lightningResetOccurred = 0
-cointTossList = []
+coinTossList = []
 i = 0
 coinToss = 0
 _sender = object
@@ -156,17 +204,19 @@ bob = User(user2Coins, 'bob')
 print("LIGHTNING DUPLEX SIMULATION")
 readFromFile = int(input("Do you want to read coin toss from the file (1 YES , 0 NO): "))
 if readFromFile == 1:
-    coin_Toss()
-    no_payments = len(cointTossList)
+    FileOption = int(input("Choose 1 of the following Coin Toss: 1. Biased Alice 2.Biased Bob or 3.Unbiased "))
+    coin_Toss(FileOption)
+    no_payments = len(coinTossList)
 else:
     no_payments = int(input("Enter the number of payments you want to Simulate: "))
-payWithReset = int(input("Choose one of the two payment methods. \n 1. Payment + Reset Together \n 2. Payment and Reset Seperate: "))
+payWithReset = int(input("Choose one of the two payment methods. \n 1. Payment + Reset Together \n 2. Payment and "
+                         "Reset Separate: "))
 
 
 # for loop to run X times
 for x in range(no_payments):
     if readFromFile == 1:
-        coinToss = cointTossList[i]
+        coinToss = coinTossList[i]
         if coinToss == 0:
             _sender = alice
             _receiver = bob
@@ -194,13 +244,19 @@ for x in range(no_payments):
             else:
                 lightningResetWithoutPayment(_sender,_receiver,amount_to_transfer)
         else:
-            lightningResetWithoutPayment(_sender,_receiver,amount_to_transfer)
-            if refillChannel(_receiver,_sender):
-                print("Refill Occurred ")
-                refill_Occurred.append(x)
-            lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
+            if validate_Coins(_receiver):
+                if refillChannel(_receiver, _sender):
+                    print("Refill Occurred ")
+                    refill_Occurred.append(x)
+                lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
+            else:
+                lightningResetWithoutPayment(_sender,_receiver,amount_to_transfer)
+                if refillChannel(_receiver,_sender):
+                    print("Refill Occurred ")
+                    refill_Occurred.append(x)
+                lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
 
-    writeforGraphs(alice.messages+bob.messages)
+    writeforGraphs(FileOption)
     print(alice.name, "has ", alice.coins, " coins to send and has received ", alice.deposited_coins,
           " uncommitted coins and ", bob.name, " has ",
           bob.coins, " coins to send and has received ", bob.deposited_coins, " uncommitted Coins")

@@ -57,7 +57,7 @@ def printResults():
     print('After simulation Alice has ', alice.coins, ' coins and bob has ', bob.coins, ' coins')
     print("Total Messages transferred were ", alice.messages + bob.messages)
 
-    print("---------------Alices' Statistics---------------")
+    print("---------------Alice's Statistics---------------")
     print("Messages transferred by Alice are: ", alice.messages)
     print("Hashes created by Alice are: ", alice.hash_counter)
     print("Signatures created by Alice are: ", alice.signature_counter)
@@ -70,16 +70,53 @@ def printResults():
     print("Bob refilled his channel ", bob.refil , " times.")
 
 
-def coin_Toss():
-    with open('coin_toss.txt', 'r') as f:
-        for line in f:
-            for ch in line:
-                coinTossList.append(int(ch))
+def coin_Toss(Fileoption):
+    alicePays = 0
+    if Fileoption == 1:
+        with open('Text_Files//AlicePaysMore.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    coinTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    elif Fileoption == 2:
+        with open('Text_Files//BobPaysMore.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    coinTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    elif Fileoption == 3:
+        with open('Text_Files//UnbaisedCoinToss.txt', 'r') as f:
+            for line in f:
+                for ch in line:
+                    coinTossList.append(int(ch))
+                    if int(ch) == 0:
+                        alicePays += 1
+    else:
+        print("Wrong Input run the program again.")
+    print("Alice is paying ", ((alicePays / 1000) * 100), " Times and Bob is paying ",
+          (((1000 - alicePays) / 1000) * 100), " times")
 
 
-def writeforGraphs(TotalMessages):
-    with open('LightningResults.txt', 'a') as f:
-        f.write(str(TotalMessages) + "\n")
+def writeforGraphs(File_Option):
+    if File_Option == 1:
+        with open('Text_Files//LightningResultsBiased_Messages.txt', 'a') as f:
+            f.write(str(alice.messages + bob.messages) + "\n")
+        with open('Text_Files//LightningResultsBiased_Refill.txt', 'w') as f2:
+            f2.write("Alice Refill = " + str(alice.refil) + " and Bob Refill " + str(bob.refil) + "\n")
+
+    elif File_Option == 3:
+        with open('Text_Files//LightningResultsUnbiased_Messages.txt', 'a') as f:
+            f.write(str(alice.messages + bob.messages) + "\n")
+        with open('Text_Files//LightningResultsUnbiased_Refill.txt', 'w') as f2:
+            f2.write("Alice Refill = " + str(alice.refil) + " and Bob Refill " + str(bob.refil) + "\n")
+
+    else:
+        with open('Text_Files//LightningResults.txt', 'a') as f:
+            f.write(str(alice.messages + bob.messages) + "\n")
+        with open('Text_Files//LightningResultsUnbiased_Refill.txt', 'w') as f2:
+            f2.write("Alice Refill = " + str(alice.refil) + " and Bob Refill " + str(bob.refil) + "\n")
 
 
 cfg = ConfigParser()
@@ -102,7 +139,8 @@ bob = User(user2Coins, 'bob',)
 print("LIGHTNING CHANNEL SIMULATION")
 readFromFile = int(input("Do you want to read coin toss from the file (1 YES , 0 NO): "))
 if readFromFile == 1:
-    coin_Toss()
+    FileOption = int(input("Choose 1 of the following Coin Toss: 1. Biased Alice 2.Biased Bob or 3.Unbiased "))
+    coin_Toss(FileOption)
     no_payments = len(coinTossList)
 else:
     no_payments = int(input("Enter the number of payments you want to Simulate: "))
@@ -146,6 +184,6 @@ for x in range(no_payments):
     print('New state of coins is that ', alice.name, ' has ', alice.coins, ' coins and ', bob.name, ' has ',
           bob.coins,
           ' coins')
-    writeforGraphs(alice.messages + bob.messages)
+    writeforGraphs(FileOption)
 
 printResults()
