@@ -1,0 +1,55 @@
+Alice is paying 50% of the Time and Bob is paying 50% of the Time 
+Messages = 4000
+Total Refill = 4
+Alice Refill = 2 and Bob Refill 2
+
+Alice is paying 51% of the Time and Bob is paying 49% of the Time 
+Messages = 4000
+Total Refill = 10
+Alice Refill = 6 and Bob Refill 4
+
+Alice is paying 52% of the Time and Bob is paying 48% of the Time 
+Messages = 4000
+Total Refill = 10
+Alice Refill = 7 and Bob Refill 3
+
+Alice is paying 53% of the Time and Bob is paying 47% of the Time 
+Messages = 4000
+Total Refill = 12
+Alice Refill = 9 and Bob Refill 3
+
+Alice is paying 54% of the Time and Bob is paying 46% of the Time 
+Messages = 4000
+Total Refill = 12
+Alice Refill = 10 and Bob Refill 2
+
+Alice is paying 55% of the Time and Bob is paying 45% of the Time 
+Messages = 4000
+Total Refill = 14
+Alice Refill = 12 and Bob Refill 2
+
+Alice is paying 56% of the Time and Bob is paying 44% of the Time 
+Messages = 4000
+Total Refill = 16
+Alice Refill = 14 and Bob Refill 2
+
+Alice is paying 57% of the Time and Bob is paying 43% of the Time 
+Messages = 4000
+Total Refill = 20
+Alice Refill = 17 and Bob Refill 3
+
+Alice is paying 58% of the Time and Bob is paying 42% of the Time 
+Messages = 4000
+Total Refill = 20
+Alice Refill = 18 and Bob Refill 2
+
+Alice is paying 59% of the Time and Bob is paying 41% of the Time 
+Messages = 4000
+Total Refill = 20
+Alice Refill = 19 and Bob Refill 1
+
+Alice is paying 60% of the Time and Bob is paying 40% of the Time 
+Messages = 4000
+Total Refill = 20
+Alice Refill = 20 and Bob Refill 0
+
