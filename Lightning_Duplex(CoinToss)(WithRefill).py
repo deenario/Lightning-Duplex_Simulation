@@ -35,12 +35,12 @@ def onewayChannel(sender, receiver, amount):
         return False
     else:
         if not (receiver.checkOverflow(amount)):
-            print(sender.name, ' computes 2 Signatures')
+            #print(sender.name, ' computes 2 Signatures')
             sender.signature_counter += 2
             sender.messages += 1
             sender.sendCoin(amount)
             receiver.recieveCoin(amount)
-            print(sender.name, ' transferred a coin to ', receiver.name)
+            #print(sender.name, ' transferred a coin to ', receiver.name)
         else:
             print('Overflow occurred')
         return True
@@ -49,7 +49,7 @@ def onewayChannel(sender, receiver, amount):
 def lightningResetWithPayment(sender, receiver, amount):
     global lightningResetOccurred
     if not (receiver.checkOverflow(amount)):
-        print(sender.name, ' computes a hash & a Signature')
+        #print(sender.name, ' computes a hash & a Signature')
         sender.hash_counter += 1
         sender.signature_counter += 1
         sender.messages += 2
@@ -60,7 +60,7 @@ def lightningResetWithPayment(sender, receiver, amount):
         receiver.coins = receiver.deposited_coins + receiver.coins
         receiver.deposited_coins = 0
         sender.deposited_coins = 0
-        print("Lightning reset Occurred now ")
+        #print("Lightning reset Occurred now ")
         lightningResetOccurred += 1
     if onewayChannel(sender, receiver, amount):
         pass
@@ -71,7 +71,7 @@ def lightningResetWithPayment(sender, receiver, amount):
 def lightningResetWithoutPayment(sender, receiver, amount):
     global lightningResetOccurred
     if not (receiver.checkOverflow(amount)):
-        print(sender.name, ' computes a hash & a Signature')
+        #print(sender.name, ' computes a hash & a Signature')
         sender.hash_counter += 1
         sender.signature_counter += 1
         sender.messages += 2
@@ -82,7 +82,7 @@ def lightningResetWithoutPayment(sender, receiver, amount):
         receiver.coins = receiver.deposited_coins + receiver.coins
         receiver.deposited_coins = 0
         sender.deposited_coins = 0
-        print("Lightning reset Occurred now ")
+        #print("Lightning reset Occurred now ")
         lightningResetOccurred += 1
     else:
         print('Overflow occurred')
@@ -117,51 +117,67 @@ def printResults():
     print('Alice has ', alice.coins, ' coins and bob has ', bob.coins, ' coins')
     print("Alice has received ", alice.deposited_coins, " uncommitted coin and bob has received ", bob.deposited_coins,
           " uncommitted coin")
-    print("Refill Occurred in rounds")
-    print(refill_Occurred)
 
     print("Total Messages transferred were ", alice.messages + bob.messages)
     print("Lightning Reset Occurred ", lightningResetOccurred, " times.")
-
+    print(Total_Refill)
     print("---------------Alices' Statistics---------------")
     print("Messages transferred by Alice are: ", alice.messages)
     print("Hashes created by Alice are: ", alice.hash_counter)
     print("Signatures created by Alice are: ", alice.signature_counter)
+    print("Alice Refill: ",alice.refill)
 
     print("---------------Bob's Statistics---------------")
     print("Messages transferred by Bob are: ", bob.messages)
     print("Hashes created by Bob are: ", bob.hash_counter)
     print("Signatures created by Bob are: ", bob.signature_counter)
+    print("Bob Refill: ",bob.refill)
 
 
-def coin_Toss(no_of_file):
-    alicePays = 0
-    bobpays = 0
-    coinTossList.clear()
+def coin_Toss(no_of_file, no_of_line):
+    global lineNo,alicePays
     with open('Text_Files//coin_toss' + str(no_of_file) + '.txt', 'r') as f:
+        counting_line = -1
         for line in f:
+            alicePays = 0
+            coinTossList.clear()
+            counting_line += 1
             for ch in line:
-                coinTossList.append(int(ch))
+                try:
+                    coinTossList.append(int(ch))
+                except ValueError:
+                    break
                 if int(ch) == 0:
                     alicePays += 1
-
-    bobpays = (((1000 - alicePays) / 1000) * 100)
-    alicePays = ((alicePays / 1000) * 100)
-    bobpays = round(bobpays)
-    alicePays = round(alicePays)
-
-    with open('Text_Files//DuplexResults.txt', 'a') as f:
-        f.write(
-            "Alice is paying {0}% of the Time and Bob is paying {1}% of the Time \n".format(str(alicePays),
-                                                                                            str(bobpays)))
+            if counting_line == lineNo:
+                lineNo += 1
+                break
 
 
 def write_for_Graphs():
-    with open('Text_Files//DuplexResults.txt', 'a') as f:
+    global Total_Messages,alicePays,Total_Refill
+
+    with open('Results//DuplexResults.txt', 'a') as f:
+        bobpays = (((1000 - alicePays) / 1000) * 100)
+        alicePays = ((alicePays / 1000) * 100)
+        bobpays = round(bobpays)
+        alicePays = round(alicePays)
+
         f.write(
-            'Messages = {0}\nTotal Refill = {1}\nAlice Refill = {2} and Bob Refill {3}'.format(
-                str(alice.messages + bob.messages), str(alice.refill + bob.refill), str(alice.refill), str(bob.refill)))
+            "Alice is paying {0}% of the Time and Bob is paying {1}% of the Time \n".format(str(alicePays),
+                                                                                            str(bobpays)))
+        f.write('Average Messages for 100 Simulations:{0} \n'.format(str(sum(Total_Messages)/len(Total_Messages))))
+        f.write('Average Refill for 100 Simulations:{0}'.format(str(sum(Total_Refill) / len(Total_Refill))))
+        f.write('Average Lightning Resets for 100 Simulations:{0}'.format(str(sum(Total_resets) / len(Total_resets))))
         f.write("\n\n")
+
+    with open('Results//DuplexMessages.txt', 'a') as f1:
+        f1.write(str(sum(Total_Messages) / len(Total_Messages)))
+        f1.write("\n")
+
+    with open('Results//DuplexRefill.txt', 'a') as f2:
+        f2.write(str(sum(Total_Refill) / len(Total_Refill)))
+        f2.write("\n")
 
 
 def simulation_Duplex():
@@ -189,31 +205,45 @@ def simulation_Duplex():
                 _receiver = alice
 
         if onewayChannel(_sender, _receiver, amount_to_transfer):
-            print("One way Transfer Occurred")
-            print()
+            print(_sender.name + " Executed One way Transfer Occurred")
         else:
             if validate_Uncommitted_Coins(_sender):
                 if payWithReset == 1:
                     lightningResetWithPayment(_sender, _receiver, amount_to_transfer)
+                    print("Reset Occurred")
+
                 else:
                     lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
+                    print("Reset Occurred")
+
             else:
                 if validate_Coins(_receiver):
                     if refillChannel(_receiver, _sender):
                         print("Refill Occurred ")
-                        refill_Occurred.append(x)
-                    lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
+                        # -------------
+                        _receiver.signature_counter -= 2
+                        _receiver.messages -= 1
+                        # -------------
+                    lightningResetWithPayment(_sender, _receiver, amount_to_transfer)
                 else:
                     lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
                     if refillChannel(_receiver, _sender):
-                        print("Refill Occurred ")
-                        refill_Occurred.append(x)
+                        print(_receiver.name + " Executed Refill")
+                        # -------------
+                        _receiver.signature_counter -= 2
+                        _receiver.messages -= 1
+                        # -------------
                     lightningResetWithoutPayment(_sender, _receiver, amount_to_transfer)
+                    if onewayChannel(_sender, _receiver, amount_to_transfer):
+                        print(_sender.name + " ExecutedOne way Transfer Occurred")
 
         print(alice.name, "has ", alice.coins, " coins to send and has received ", alice.deposited_coins,
               " uncommitted coins and ", bob.name, " has ",
               bob.coins, " coins to send and has received ", bob.deposited_coins, " uncommitted Coins")
 
+    Total_Messages.append(alice.messages+bob.messages)
+    Total_Refill.append(alice.refill+bob.refill)
+    Total_resets.append(lightningResetOccurred)
 
 
 def reset_variables():
@@ -222,13 +252,15 @@ def reset_variables():
     lightningResetOccurred = 0
     no_payments = 0
     alice.coins = 10
+    alice.deposited_coins = 0
     alice.messages = 0
-    alice.refil = 0
+    alice.refill = 0
     alice.signature_counter = 0
     alice.hash_counter = 0
     bob.coins = 10
+    bob.deposited_coins = 0
     bob.messages = 0
-    bob.refil = 0
+    bob.refill = 0
     bob.signature_counter = 0
     bob.hash_counter = 0
 
@@ -244,6 +276,11 @@ coinToss = 0
 _sender = object
 _receiver = object
 refill_Occurred = []
+Total_Messages = []
+alicePays = 0
+lineNo = 0
+Total_Refill = []
+Total_resets = []
 
 # create two objects of the user class
 alice = User(user1Coins, 'alice')
@@ -257,13 +294,18 @@ payWithReset = int(input("Choose one of the two payment methods. \n 1. Payment +
 
 
 if readFromFile == 1:
-    for x in range(11):
-        coin_Toss(x)
-        no_payments = len(coinTossList)
-        simulation_Duplex()
-        printResults()
+    for x in range(51):
+        lineNo = 0
+        for y in range(100):
+            coin_Toss(x,y)
+            no_payments = len(coinTossList)
+            simulation_Duplex()
+            printResults()
+            reset_variables()
         write_for_Graphs()
-        reset_variables()
+        Total_Messages.clear()
+        Total_Refill.clear()
+        Total_resets.clear()
 else:
     no_payments = int(input("Enter the number of payments you want to Simulate: "))
     simulation_Duplex()

@@ -1,0 +1,204 @@
+Alice is paying 50% of the Time and Bob is paying 50% of the Time 
+Average Messages for 100 Simulations:1352.52 
+Average Refill for 100 Simulations:7.6
+
+Alice is paying 51% of the Time and Bob is paying 49% of the Time 
+Average Messages for 100 Simulations:1359.08 
+Average Refill for 100 Simulations:8.33
+
+Alice is paying 52% of the Time and Bob is paying 48% of the Time 
+Average Messages for 100 Simulations:1358.28 
+Average Refill for 100 Simulations:8.37
+
+Alice is paying 53% of the Time and Bob is paying 47% of the Time 
+Average Messages for 100 Simulations:1367.28 
+Average Refill for 100 Simulations:9.24
+
+Alice is paying 54% of the Time and Bob is paying 46% of the Time 
+Average Messages for 100 Simulations:1371.32 
+Average Refill for 100 Simulations:10.35
+
+Alice is paying 55% of the Time and Bob is paying 45% of the Time 
+Average Messages for 100 Simulations:1385.96 
+Average Refill for 100 Simulations:11.61
+
+Alice is paying 56% of the Time and Bob is paying 44% of the Time 
+Average Messages for 100 Simulations:1396.36 
+Average Refill for 100 Simulations:13.18
+
+Alice is paying 57% of the Time and Bob is paying 43% of the Time 
+Average Messages for 100 Simulations:1409.04 
+Average Refill for 100 Simulations:14.67
+
+Alice is paying 58% of the Time and Bob is paying 42% of the Time 
+Average Messages for 100 Simulations:1418.96 
+Average Refill for 100 Simulations:16.2
+
+Alice is paying 59% of the Time and Bob is paying 41% of the Time 
+Average Messages for 100 Simulations:1437.16 
+Average Refill for 100 Simulations:18.18
+
+Alice is paying 60% of the Time and Bob is paying 40% of the Time 
+Average Messages for 100 Simulations:1443.16 
+Average Refill for 100 Simulations:20.06
+
+Alice is paying 61% of the Time and Bob is paying 39% of the Time 
+Average Messages for 100 Simulations:1454.24 
+Average Refill for 100 Simulations:21.76
+
+Alice is paying 62% of the Time and Bob is paying 38% of the Time 
+Average Messages for 100 Simulations:1463.76 
+Average Refill for 100 Simulations:23.63
+
+Alice is paying 63% of the Time and Bob is paying 37% of the Time 
+Average Messages for 100 Simulations:1476.12 
+Average Refill for 100 Simulations:25.59
+
+Alice is paying 64% of the Time and Bob is paying 36% of the Time 
+Average Messages for 100 Simulations:1487.04 
+Average Refill for 100 Simulations:27.6
+
+Alice is paying 65% of the Time and Bob is paying 35% of the Time 
+Average Messages for 100 Simulations:1495.24 
+Average Refill for 100 Simulations:29.55
+
+Alice is paying 66% of the Time and Bob is paying 34% of the Time 
+Average Messages for 100 Simulations:1508.92 
+Average Refill for 100 Simulations:31.62
+
+Alice is paying 67% of the Time and Bob is paying 33% of the Time 
+Average Messages for 100 Simulations:1517.6 
+Average Refill for 100 Simulations:33.47
+
+Alice is paying 68% of the Time and Bob is paying 32% of the Time 
+Average Messages for 100 Simulations:1522.28 
+Average Refill for 100 Simulations:35.43
+
+Alice is paying 69% of the Time and Bob is paying 31% of the Time 
+Average Messages for 100 Simulations:1528.88 
+Average Refill for 100 Simulations:37.5
+
+Alice is paying 70% of the Time and Bob is paying 30% of the Time 
+Average Messages for 100 Simulations:1538.8 
+Average Refill for 100 Simulations:39.44
+
+Alice is paying 71% of the Time and Bob is paying 29% of the Time 
+Average Messages for 100 Simulations:1542.96 
+Average Refill for 100 Simulations:41.44
+
+Alice is paying 72% of the Time and Bob is paying 28% of the Time 
+Average Messages for 100 Simulations:1549.08 
+Average Refill for 100 Simulations:43.45
+
+Alice is paying 73% of the Time and Bob is paying 27% of the Time 
+Average Messages for 100 Simulations:1554.12 
+Average Refill for 100 Simulations:45.31
+
+Alice is paying 74% of the Time and Bob is paying 26% of the Time 
+Average Messages for 100 Simulations:1560.28 
+Average Refill for 100 Simulations:47.35
+
+Alice is paying 75% of the Time and Bob is paying 25% of the Time 
+Average Messages for 100 Simulations:1561.88 
+Average Refill for 100 Simulations:49.32
+
+Alice is paying 76% of the Time and Bob is paying 24% of the Time 
+Average Messages for 100 Simulations:1567.72 
+Average Refill for 100 Simulations:51.37
+
+Alice is paying 77% of the Time and Bob is paying 23% of the Time 
+Average Messages for 100 Simulations:1574.08 
+Average Refill for 100 Simulations:53.36
+
+Alice is paying 78% of the Time and Bob is paying 22% of the Time 
+Average Messages for 100 Simulations:1575.32 
+Average Refill for 100 Simulations:55.27
+
+Alice is paying 79% of the Time and Bob is paying 21% of the Time 
+Average Messages for 100 Simulations:1578.0 
+Average Refill for 100 Simulations:57.29
+
+Alice is paying 80% of the Time and Bob is paying 20% of the Time 
+Average Messages for 100 Simulations:1580.32 
+Average Refill for 100 Simulations:59.26
+
+Alice is paying 81% of the Time and Bob is paying 19% of the Time 
+Average Messages for 100 Simulations:1579.48 
+Average Refill for 100 Simulations:61.22
+
+Alice is paying 82% of the Time and Bob is paying 18% of the Time 
+Average Messages for 100 Simulations:1583.28 
+Average Refill for 100 Simulations:63.24
+
+Alice is paying 83% of the Time and Bob is paying 17% of the Time 
+Average Messages for 100 Simulations:1581.92 
+Average Refill for 100 Simulations:65.13
+
+Alice is paying 84% of the Time and Bob is paying 16% of the Time 
+Average Messages for 100 Simulations:1583.08 
+Average Refill for 100 Simulations:67.19
+
+Alice is paying 85% of the Time and Bob is paying 15% of the Time 
+Average Messages for 100 Simulations:1582.32 
+Average Refill for 100 Simulations:69.11
+
+Alice is paying 86% of the Time and Bob is paying 14% of the Time 
+Average Messages for 100 Simulations:1579.32 
+Average Refill for 100 Simulations:71.17
+
+Alice is paying 87% of the Time and Bob is paying 13% of the Time 
+Average Messages for 100 Simulations:1576.64 
+Average Refill for 100 Simulations:73.15
+
+Alice is paying 88% of the Time and Bob is paying 12% of the Time 
+Average Messages for 100 Simulations:1571.92 
+Average Refill for 100 Simulations:75.13
+
+Alice is paying 89% of the Time and Bob is paying 11% of the Time 
+Average Messages for 100 Simulations:1570.68 
+Average Refill for 100 Simulations:77.08
+
+Alice is paying 90% of the Time and Bob is paying 10% of the Time 
+Average Messages for 100 Simulations:1564.28 
+Average Refill for 100 Simulations:79.09
+
+Alice is paying 91% of the Time and Bob is paying 9% of the Time 
+Average Messages for 100 Simulations:1556.12 
+Average Refill for 100 Simulations:81.06
+
+Alice is paying 92% of the Time and Bob is paying 8% of the Time 
+Average Messages for 100 Simulations:1550.0 
+Average Refill for 100 Simulations:83.06
+
+Alice is paying 93% of the Time and Bob is paying 7% of the Time 
+Average Messages for 100 Simulations:1537.48 
+Average Refill for 100 Simulations:85.07
+
+Alice is paying 94% of the Time and Bob is paying 6% of the Time 
+Average Messages for 100 Simulations:1526.92 
+Average Refill for 100 Simulations:87.09
+
+Alice is paying 95% of the Time and Bob is paying 5% of the Time 
+Average Messages for 100 Simulations:1510.56 
+Average Refill for 100 Simulations:89.06
+
+Alice is paying 96% of the Time and Bob is paying 4% of the Time 
+Average Messages for 100 Simulations:1494.84 
+Average Refill for 100 Simulations:91.05
+
+Alice is paying 97% of the Time and Bob is paying 3% of the Time 
+Average Messages for 100 Simulations:1474.24 
+Average Refill for 100 Simulations:93.04
+
+Alice is paying 98% of the Time and Bob is paying 2% of the Time 
+Average Messages for 100 Simulations:1452.12 
+Average Refill for 100 Simulations:95.01
+
+Alice is paying 99% of the Time and Bob is paying 1% of the Time 
+Average Messages for 100 Simulations:1426.36 
+Average Refill for 100 Simulations:97.0
+
+Alice is paying 100% of the Time and Bob is paying 0% of the Time 
+Average Messages for 100 Simulations:1396.0 
+Average Refill for 100 Simulations:99.0
+

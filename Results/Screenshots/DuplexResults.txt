@@ -1,0 +1,55 @@
+Alice is paying 50% of the Time and Bob is paying 50% of the Time 
+Average Messages for 100 Simulations:1352.52 
+Average Refill for 100 Simulations:7.6
+Average Lightning Resets for 100 Simulations:88.13
+
+Alice is paying 50% of the Time and Bob is paying 50% of the Time 
+Average Messages for 100 Simulations:1352.52 
+Average Refill for 100 Simulations:7.6
+Average Lightning Resets for 100 Simulations:88.13
+
+Alice is paying 51% of the Time and Bob is paying 49% of the Time 
+Average Messages for 100 Simulations:1359.08 
+Average Refill for 100 Simulations:8.33
+Average Lightning Resets for 100 Simulations:89.77
+
+Alice is paying 52% of the Time and Bob is paying 48% of the Time 
+Average Messages for 100 Simulations:1358.28 
+Average Refill for 100 Simulations:8.37
+Average Lightning Resets for 100 Simulations:89.57
+
+Alice is paying 53% of the Time and Bob is paying 47% of the Time 
+Average Messages for 100 Simulations:1367.28 
+Average Refill for 100 Simulations:9.24
+Average Lightning Resets for 100 Simulations:91.82
+
+Alice is paying 54% of the Time and Bob is paying 46% of the Time 
+Average Messages for 100 Simulations:1371.32 
+Average Refill for 100 Simulations:10.35
+Average Lightning Resets for 100 Simulations:92.83
+
+Alice is paying 55% of the Time and Bob is paying 45% of the Time 
+Average Messages for 100 Simulations:1385.96 
+Average Refill for 100 Simulations:11.61
+Average Lightning Resets for 100 Simulations:96.49
+
+Alice is paying 56% of the Time and Bob is paying 44% of the Time 
+Average Messages for 100 Simulations:1396.36 
+Average Refill for 100 Simulations:13.18
+Average Lightning Resets for 100 Simulations:99.09
+
+Alice is paying 57% of the Time and Bob is paying 43% of the Time 
+Average Messages for 100 Simulations:1409.04 
+Average Refill for 100 Simulations:14.67
+Average Lightning Resets for 100 Simulations:102.26
+
+Alice is paying 58% of the Time and Bob is paying 42% of the Time 
+Average Messages for 100 Simulations:1418.96 
+Average Refill for 100 Simulations:16.2
+Average Lightning Resets for 100 Simulations:104.74
+
+Alice is paying 59% of the Time and Bob is paying 41% of the Time 
+Average Messages for 100 Simulations:1437.16 
+Average Refill for 100 Simulations:18.18
+Average Lightning Resets for 100 Simulations:109.29
+

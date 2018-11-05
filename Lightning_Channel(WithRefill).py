@@ -42,7 +42,7 @@ def refill(sender, receiver):
 
 def payUser(sender, receiver, amount):
     if not (receiver.checkOverflow(amount)):
-        print(sender.name, ' computer a hash & a Signature')
+       # print(sender.name, ' computer a hash & a Signature')
         sender.hash_counter += 1
         sender.signature_counter += 1
         sender.messages += 2
@@ -51,7 +51,7 @@ def payUser(sender, receiver, amount):
         receiver.messages += 2
         sender.sendCoin(amount)
         receiver.recieveCoin(amount)
-        print(sender.name, ' transferred a coin to ', receiver.name)
+       # print(sender.name, ' transferred a coin to ', receiver.name)
     else:
         print('Overflow occurred')
 
@@ -76,34 +76,48 @@ def printResults():
     print()
 
 
-def coin_Toss(no_of_file):
-    alicePays = 0
-    bobpays = 0
-    coinTossList.clear()
+def coin_Toss(no_of_file, no_of_line):
+    global lineNo,alicePays
     with open('Text_Files//coin_toss' + str(no_of_file) + '.txt', 'r') as f:
+        counting_line = -1
         for line in f:
+            alicePays = 0
+            coinTossList.clear()
+            counting_line += 1
             for ch in line:
-                coinTossList.append(int(ch))
+                try:
+                    coinTossList.append(int(ch))
+                except ValueError:
+                    break
                 if int(ch) == 0:
                     alicePays += 1
-
-    bobpays = (((1000 - alicePays) / 1000) * 100)
-    alicePays = ((alicePays / 1000) * 100)
-    bobpays = round(bobpays)
-    alicePays = round(alicePays)
-
-    with open('Text_Files//LightningResults.txt', 'a') as f:
-        f.write(
-            "Alice is paying {0}% of the Time and Bob is paying {1}% of the Time \n".format(str(alicePays),
-                                                                                            str(bobpays)))
+            if counting_line == lineNo:
+                lineNo += 1
+                break
 
 
 def write_for_Graphs():
-    with open('Text_Files//LightningResults.txt', 'a') as f:
+    global Total_Messages,alicePays,Total_Refill
+
+    with open('Results//LightningResults.txt', 'a') as f:
+        bobpays = (((1000 - alicePays) / 1000) * 100)
+        alicePays = ((alicePays / 1000) * 100)
+        bobpays = round(bobpays)
+        alicePays = round(alicePays)
         f.write(
-            'Messages = {0}\nTotal Refill = {1}\nAlice Refill = {2} and Bob Refill {3}'.format(
-                str(alice.messages + bob.messages), str(alice.refil + bob.refil), str(alice.refil), str(bob.refil)))
+            "Alice is paying {0}% of the Time and Bob is paying {1}% of the Time \n".format(str(alicePays),
+                                                                                            str(bobpays)))
+        f.write('Average Messages for 100 Payments: {0} \n'.format(str(sum(Total_Messages)/len(Total_Messages))))
+        f.write('Average Refill for 100 Simulations:{0}'.format(str(sum(Total_Refill) / len(Total_Refill))))
         f.write("\n\n")
+
+    with open('Results//LightningMessages.txt', 'a') as f1:
+        f1.write(str(sum(Total_Messages) / len(Total_Messages)))
+        f1.write("\n")
+
+    with open('Results//LightningRefill.txt', 'a') as f2:
+        f2.write(str(sum(Total_Refill) / len(Total_Refill)))
+        f2.write("\n")
 
 
 def Simulating_Lightning():
@@ -112,42 +126,47 @@ def Simulating_Lightning():
     # for loop to run X times
     for x in range(no_payments):
         _rounds += 1
-        print('ROUND # ', _rounds)
+        # print('ROUND # ', _rounds)
         # if Alice or Bob gets to an unbalanced state of ZERO coins
         # Alice has Zero Coins
 
         if refill(alice, bob):
-            print('Alice Refilled Her Channel')
+            pass
+            # print('Alice Refilled Her Channel')
 
         elif refill(bob, alice):
-            print('Bob Refilled Her Channel')
+            pass
+            #print('Bob Refilled Her Channel')
 
         else:
-            if readFromFile == 1:
-                # coin Toss between head and tails.
-                # Head = 1 & tail = 0
-                coinToss = coinTossList[i]
-                # coin toss = 1 = heads . Alice pays bob
-                if 0 == coinToss:
-                    payUser(alice, bob, amount_to_transfer)
-                # coin toss = 0 = Tails . Bob pays Alice
-                else:
-                    payUser(bob, alice, amount_to_transfer)
-                i += 1
-            else:
-                # coin Toss between head and tails.
-                # Head = 1 & tail = 0
-                coinToss = random.randint(0, 1)
-                # coin toss = 0 = heads . Alice pays bob
-                if 0 == coinToss:
-                    payUser(alice, bob, amount_to_transfer)
-                # coin toss = 1 = Tails . Bob pays Alice
-                else:
-                    payUser(bob, alice, amount_to_transfer)
+            pass
 
+        if readFromFile == 1:
+            # coin Toss between head and tails.
+            # Head = 1 & tail = 0
+            coinToss = coinTossList[i]
+            # coin toss = 1 = heads . Alice pays bob
+            if 0 == coinToss:
+                payUser(alice, bob, amount_to_transfer)
+            # coin toss = 0 = Tails . Bob pays Alice
+            else:
+                payUser(bob, alice, amount_to_transfer)
+            i += 1
+        else:
+            # coin Toss between head and tails.
+            # Head = 1 & tail = 0
+            coinToss = random.randint(0, 1)
+            # coin toss = 0 = heads . Alice pays bob
+            if 0 == coinToss:
+                payUser(alice, bob, amount_to_transfer)
+            # coin toss = 1 = Tails . Bob pays Alice
+            else:
+                payUser(bob, alice, amount_to_transfer)
         print('New state of coins is that ', alice.name, ' has ', alice.coins, ' coins and ', bob.name, ' has ',
-              bob.coins,
-              ' coins')
+               bob.coins,
+               ' coins')
+    Total_Messages.append(alice.messages+bob.messages)
+    Total_Refill.append(alice.refil+bob.refil)
 
 
 def reset_variables():
@@ -180,6 +199,11 @@ _rounds = 0
 unbalancedCondition = 0
 coinTossList = []
 no_payments = 0
+file_loop = 0
+lineNo = 0
+Total_Messages = []
+alicePays = 0
+Total_Refill = []
 # create two objects of the user class
 alice = User(user1Coins, 'alice', )
 bob = User(user2Coins, 'bob', )
@@ -190,13 +214,17 @@ bob = User(user2Coins, 'bob', )
 print("LIGHTNING CHANNEL SIMULATION")
 readFromFile = int(input("Do you want to read coin toss from the file (1 YES , 0 NO): "))
 if readFromFile == 1:
-    for x in range(11):
-        coin_Toss(x)
-        no_payments = len(coinTossList)
-        Simulating_Lightning()
-        printResults()
+    for x in range(51):
+        lineNo = 0
+        for y in range(100):
+            coin_Toss(x,y)
+            no_payments = len(coinTossList)
+            Simulating_Lightning()
+            printResults()
+            reset_variables()
         write_for_Graphs()
-        reset_variables()
+        Total_Messages.clear()
+        Total_Refill.clear()
 else:
     no_payments = int(input("Enter the number of payments you want to Simulate: "))
     Simulating_Lightning()
